@@ -18,6 +18,30 @@ import {PrismaService} from '@framework/prisma/prisma.service';
 export class TagController {
   constructor(private readonly prisma: PrismaService) {}
 
+  @Get('grouped')
+  async getGroupedTags() {
+    const tagGroups = await this.prisma.tagGroup.findMany({
+      select: {
+        id: true,
+        name: true,
+        tags: {select: {id: true, name: true}},
+      },
+    });
+
+    const tagsWithoutGroup = await this.prisma.tag.findMany({
+      where: {groupId: null},
+      select: {id: true, name: true},
+    });
+
+    tagGroups.push({
+      id: -1, // Use -1 to indicate no group
+      name: '未分组',
+      tags: tagsWithoutGroup,
+    });
+
+    return tagGroups;
+  }
+
   @Post('')
   @ApiBody({
     description: "The 'name' is required in request body.",
