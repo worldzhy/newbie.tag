@@ -81,6 +81,11 @@ export class TagGroupController {
   async deleteTagGroup(
     @Param('tagGroupId') tagGroupId: number
   ): Promise<TagGroup> {
+    await this.prisma.tag.updateMany({
+      where: {groupId: tagGroupId},
+      data: {groupId: null},
+    });
+
     return await this.prisma.tagGroup.delete({
       where: {id: tagGroupId},
     });
