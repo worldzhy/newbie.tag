@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  Patch,
-  Post,
-  Body,
-  Param,
-  Query,
-} from '@nestjs/common';
+import {Controller, Delete, Get, Patch, Post, Body, Param, Query} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth, ApiBody} from '@nestjs/swagger';
 import {TagGroup, Prisma} from '@prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
@@ -28,19 +19,14 @@ export class TagGroupController {
       },
     },
   })
-  async createTagGroup(
-    @Body() body: Prisma.TagGroupUncheckedCreateInput
-  ): Promise<TagGroup> {
+  async createTagGroup(@Body() body: Prisma.TagGroupUncheckedCreateInput): Promise<TagGroup> {
     return await this.prisma.tagGroup.create({
       data: body,
     });
   }
 
   @Get('')
-  async getTagGroups(
-    @Query('page') page: number,
-    @Query('pageSize') pageSize: number
-  ) {
+  async getTagGroups(@Query('page') page: number, @Query('pageSize') pageSize: number) {
     return await this.prisma.findManyInManyPages({
       model: Prisma.ModelName.TagGroup,
       pagination: {page, pageSize},
@@ -48,9 +34,7 @@ export class TagGroupController {
   }
 
   @Get(':tagGroupId')
-  async getTagGroup(
-    @Param('tagGroupId') tagGroupId: number
-  ): Promise<TagGroup> {
+  async getTagGroup(@Param('tagGroupId') tagGroupId: number): Promise<TagGroup> {
     return await this.prisma.tagGroup.findUniqueOrThrow({
       where: {id: tagGroupId},
     });
@@ -78,9 +62,7 @@ export class TagGroupController {
   }
 
   @Delete(':tagGroupId')
-  async deleteTagGroup(
-    @Param('tagGroupId') tagGroupId: number
-  ): Promise<TagGroup> {
+  async deleteTagGroup(@Param('tagGroupId') tagGroupId: number): Promise<TagGroup> {
     await this.prisma.tag.updateMany({
       where: {groupId: tagGroupId},
       data: {groupId: null},

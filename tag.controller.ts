@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  Patch,
-  Post,
-  Body,
-  Param,
-  Query,
-} from '@nestjs/common';
+import {Controller, Delete, Get, Patch, Post, Body, Param, Query} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth, ApiBody} from '@nestjs/swagger';
 import {Tag, Prisma} from '@prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
@@ -62,11 +53,7 @@ export class TagController {
   }
 
   @Get('')
-  async getTags(
-    @Query('page') page: number,
-    @Query('pageSize') pageSize: number,
-    @Query('name') name?: string
-  ) {
+  async getTags(@Query('page') page: number, @Query('pageSize') pageSize: number, @Query('name') name?: string) {
     // [step 1] Construct where argument.
     let where: Prisma.TagWhereInput | undefined;
     const whereConditions: object[] = [];
