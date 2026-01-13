@@ -1,6 +1,6 @@
 import {Controller, Delete, Get, Patch, Post, Body, Param, Query} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth, ApiBody} from '@nestjs/swagger';
-import {TagGroup, Prisma} from '@prisma/client';
+import {TagGroup, Prisma} from '@generated/prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
 
 @ApiTags('Tag / Group')
